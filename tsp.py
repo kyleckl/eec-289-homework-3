@@ -14,7 +14,7 @@ def parseTSPFile(f):
         # get number of nodes
         numNodes = int(lines[0].strip())
     
-        print("Nummber of nodes:", numNodes)
+        print("Number of nodes:", numNodes)
 
         # skip the second line that are just column names
         startIndex = 0
@@ -74,6 +74,46 @@ def tspGreedy(G, numNodes):
         totalCost += returnDist
         
     return path, totalCost
+
+# hill climbing approach
+def tspHillClimbing(G, numNodes, initialPath, initialCost, timeLimit = 55):
+    # swap edges 2-opt and accept changes that improve cost
+    currPath = list(initialPath)
+    currCost = initialCost
+
+    bestPath = list(currPath)
+    bestCost = currCost
+
+    visitedCycles = 0
+    startTime = time.time()
+
+    # keep running until time limit is reached
+    while(time.time() - startTime) < timeLimit:
+        visitedCycles = visitedCycles + 1
+
+        i, j = sorted(random.sample(range(1, numNodes), 2))
+
+        # A --> B --> C --> D
+        A = currPath[i - 1]
+        B = currPath[i]
+        C = currPath[j]
+        D = currPath[(j + 1) % numNodes]
+
+        # check if distance changed
+        distRemoved = G[A][B] + G[C][D]
+        dAdded = G[A][C] + G[B][D]
+
+        newCost = currCost - distRemoved + dAdded
+
+        # check to see if the new cost is better (lesser)
+        # if so, swap
+        if newCost < currCost:
+            currPath[i:j+1] = reversed(currPath[i:j+1])
+            currCost = newCost
+            bestCost = currCost
+            bestPath = list(currPath)
+    
+    return bestPath, bestCost, visitedCycles
 
 # main
 if __name__ == "__main__":
