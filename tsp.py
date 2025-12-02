@@ -119,7 +119,7 @@ def tspHillClimbing(G, numNodes, initialPath, initialCost, timeLimit = 55):
 if __name__ == "__main__":
     # parse file(s)
     files = ["TSP_1000_euclidianDistance.txt", "TSP_1000_randomDistance.txt"]
-    result = []
+    sols = []
 
     for f in files:
         G, numNodes = parseTSPFile(f)
@@ -132,3 +132,30 @@ if __name__ == "__main__":
         # optimize with hill climbing
         finalPath, finalCost, visited = tspHillClimbing(G, numNodes, greedyPath, greedyCost, timeLimit = 55)
         print("Hill climbing optimization complete, cost:", finalCost)
+
+        # prep stuff for output
+        outputPath = [str(node + 1) for node in finalPath]
+        outputPath.append(outputPath[0])
+
+        # comma separated str
+        cycleStr = ", ".join(outputPath)
+        sols.append(cycleStr)
+        roundedCost = math.ceil(finalCost*100)/100
+        roundedCostStr = "{:.2f}".format(roundedCost)
+        visitedCycles = "{:.0e}".format(visited).replace("+", "")
+
+        print("Rounded Cost:", roundedCostStr)
+        print("Visited Cycles:", visitedCycles)
+    
+    outputFile = "solution_920455968.txt"
+    with open(outputFile, "w") as out:
+        out.write(sols[0]+"\n")
+        out.write(sols[1]+"\n")
+    
+    print("program finished")
+
+# output results
+# first and second line should contain the cycle for the euclidean distance and random distance graphs, respectively
+# cycle outputted as a sequence of node indeces separated by commas
+# sid in file name replaced with student id `solution_SID.txt`
+# report num visited cycles with 1 digit before the exponent, round cyclke cost up to two digits after the decimal point
