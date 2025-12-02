@@ -5,6 +5,9 @@ import random
 
 # file parsing
 def parseTSPFile(f):
+    # dictionary to represent graph info
+    G ={}
+
     with open(f, 'r') as file:
         lines = file.readlines()
 
@@ -25,6 +28,16 @@ def parseTSPFile(f):
         for i in range(startIndex, len(lines)):
             parts = lines[i].strip().split()
             # cast to appropriate type since its a string
-            node1 = int(parts[0])
-            node2 = int(parts[1])
-            distance = float(parts[2])
+            # subtract 1 to get 0 index
+            V1 = int(parts[0]) - 1
+            V2 = int(parts[1]) - 1
+            E = float(parts[2])
+
+            if V1 not in G:
+                G[V1] = {}
+            if V2 not in G:
+                G[V2] = {}
+            
+            G[V1][V2] = E
+            G[V2][V1] = E
+    return G, numNodes
