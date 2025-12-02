@@ -42,6 +42,33 @@ def parseTSPFile(f):
             G[V2][V1] = E
     return G, numNodes
 
+# greedy approach
+# choose the nearest unvisited neighbor from current node
+def tspGreedy(G, numNodes):
+    startNode = 0
+    path = [startNode]
+    visited = set([startNode])
+    cost = 0.0
+
+    currentNode = startNode
+    # keep looping until the path we have has all the nodes
+    while len(path) < numNodes:
+        nextNode = None
+        shortestDistance = float('inf')
+        for n, d in G.get(currentNode, {}).items():
+            if n not in visited and d < shortestDistance:
+                shortestDistance = d
+                nextNode = n
+        
+        if nextNode is not None:
+            path.append(nextNode)
+            visited.add(nextNode)
+            currentNode = nextNode
+        else:
+            break
+        
+        return path
+
 # main
 if __name__ == "__main__":
     # parse file(s)
