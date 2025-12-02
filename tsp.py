@@ -48,7 +48,7 @@ def tspGreedy(G, numNodes):
     startNode = 0
     path = [startNode]
     visited = set([startNode])
-    cost = 0.0
+    totalCost = 0.0
 
     currentNode = startNode
     # keep looping until the path we have has all the nodes
@@ -64,10 +64,16 @@ def tspGreedy(G, numNodes):
             path.append(nextNode)
             visited.add(nextNode)
             currentNode = nextNode
+            totalCost += shortestDistance
         else:
             break
+    
+    # return to start
+    if len(path) == numNodes:
+        returnDist = G[currentNode][startNode]
+        totalCost += returnDist
         
-        return path
+    return path, totalCost
 
 # main
 if __name__ == "__main__":
