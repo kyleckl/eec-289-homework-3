@@ -41,3 +41,9 @@ def parseTSPFile(f):
             G[V1][V2] = E
             G[V2][V1] = E
     return G, numNodes
+
+# main
+if __name__ == "__main__":
+    # parse file(s)
+    files = ["TSP_1000_euclidianDistance.txt", "TSP_1000_randomDistance.txt"]
+    result = []
