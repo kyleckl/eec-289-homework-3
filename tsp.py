@@ -80,3 +80,11 @@ if __name__ == "__main__":
     # parse file(s)
     files = ["TSP_1000_euclidianDistance.txt", "TSP_1000_randomDistance.txt"]
     result = []
+
+    for f in files:
+        G, numNodes = parseTSPFile(f)
+        print("Finished parsing graph from file", f)
+
+        # find greedy solution
+        greedyPath, greedyCost = tspGreedy(G, numNodes)
+        print("Greedy solution for file found, cost:", greedyCost)
