@@ -20,7 +20,7 @@ def parseTSPFile(f):
         startIndex = 0
         for i, line in enumerate(lines):
             parts = line.strip().split()
-            if len(parts) == 3:
+            if len(parts) == 3 and parts[0].isdigit() and parts[1].isdigit():
                 startIndex = i
                 break
         
