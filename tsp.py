@@ -128,3 +128,7 @@ if __name__ == "__main__":
         # find greedy solution
         greedyPath, greedyCost = tspGreedy(G, numNodes)
         print("Greedy solution for file found, cost:", greedyCost)
+
+        # optimize with hill climbing
+        finalPath, finalCost, visited = tspHillClimbing(G, numNodes, greedyPath, greedyCost, timeLimit = 55)
+        print("Hill climbing optimization complete, cost:", finalCost)
